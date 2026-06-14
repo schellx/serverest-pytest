@@ -78,7 +78,7 @@ def test_nao_permitir_email_duplicado():
     assert response.status_code == 400
 
 #valida a mensagem retornada
-    assert body["message"] == "Este email ja esta em uso"
+    assert body["message"] == "Este email já está sendo usado"
 
 
 #verifica se o campo nome é obrigatorio
@@ -164,9 +164,11 @@ def test_buscar_usuario_por_id():
     assert body["_id"] == usuario_id
     assert body["nome"] == payload["nome"]
 
+
  #verifica o comportamento da API ao buscar um usuário inexistente
 def test_buscar_usuario_inexistente():
-    usuario_id = "000000000000000000000000"
+#correcao, com 16 caracteres
+    usuario_id = "0000000000000000"
 
     response = requests.get(
         f"{BASE_URL}/usuarios/{usuario_id}"
@@ -175,7 +177,8 @@ def test_buscar_usuario_inexistente():
     body = response.json()
 
     assert response.status_code == 400
-    assert "message" in body
+    assert body["message"] == "Usuário não encontrado"
+
 
 #verifica se um usuário pode ser atualizado
 def test_atualizar_usuario():
