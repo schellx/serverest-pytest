@@ -142,7 +142,7 @@ def test_excluir_produto():
         json={
             "nome": "webcam",
             "preco": 150,
-            "descricao": "Webcam full HD",
+            "descricao": f"webcam {uuid.uuid4().hex[:6]}",
             "quantidade": 1
         }
     )
