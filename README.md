@@ -4,7 +4,7 @@
 
 Este projeto foi desenvolvido com o objetivo de praticar automação de testes de API utilizando Python e Pytest.
 
-Os testes foram implementados no endpoint de usuários da API ServeRest, contemplando os principais cenários de cadastro, consulta, atualização e exclusão de usuários
+Os testes foram implementados nos endpoints de usuários, login e produtos da API ServeRest, contemplando os principais cenários de cadastro, autenticação, consulta, atualização e exclusão
 
 API utilizada:
 
@@ -17,6 +17,7 @@ https://compassuol.serverest.dev/
 * Python 3
 * Pytest
 * Requests
+* Pytest-cov (Análise de cobertura)
 * Git
 * GitHub
 * Visual Studio Code
@@ -29,14 +30,17 @@ https://compassuol.serverest.dev/
 TesteAPI
 │
 ├── tests
+│   ├── test_login.py
+│   ├── test_produtos.py
 │   └── test_usuarios.py
 │
 ├── utils
+│   ├── autenticacao.py
 │   └── gera_dados.py
 │
-├── venv
 │
 ├── .gitignore
+├── PLANO-DE-TESTES.md
 ├── pytest.ini
 ├── requirements.txt
 └── README.md
@@ -46,7 +50,7 @@ TesteAPI
 
 ## Cenários automatizados
 
-Os seguintes cenários foram implementados:
+### Usuários
 
 * Listar usuários cadastrados
 * Cadastrar usuário com dados válidos
@@ -59,7 +63,25 @@ Os seguintes cenários foram implementados:
 * Atualizar usuário
 * Excluir usuário
 
-Total de testes automatizados: **10**
+### Login
+
+* Login com credenciais válidas
+* Login com senha incorreta
+* Login com e-mail inexistente
+* Login sem e-mail
+* Login sem senha
+
+### Produtos
+
+* Listar produtos cadastrados
+* Cadastrar produto com token de administrador
+* Validar cadastro de produto sem token
+* Buscar produto por ID
+* Atualizar produto
+* Excluir produto
+
+**Total de testes automatizados: 21**
+
 
 ---
 
@@ -80,34 +102,6 @@ Clone o repositório:
 git clone https://github.com/schellx/serverest-pytest
 ```
 
-Acesse a pasta do projeto:
-
-```bash
-cd TesteAPI
-```
-
-Crie o ambiente virtual:
-
-```bash
-python -m venv venv
-```
-
-Ative o ambiente virtual:
-
-### Windows
-
-```bash
-venv\Scripts\activate
-```
-
-Instale as dependências:
-
-```bash
-pip install -r requirements.txt
-```
-
----
-
 ## Executando os testes
 
 Para executar todos os testes:
@@ -119,20 +113,15 @@ pytest -v
 Exemplo de saída:
 
 ```text
+
 ============================= test session starts =============================
+collected 21 items
 
-collected 10 items
+tests/test_login.py .....                                                [ 23%]
+tests/test_produtos.py ......                                            [ 52%]
+tests/test_usuarios.py ..........                                        [100%]
 
-tests/test_usuarios.py::test_listar_usuarios PASSED
-tests/test_usuarios.py::test_cadastrar_usuario_valido PASSED
-tests/test_usuarios.py::test_nao_permitir_email_duplicado PASSED
-tests/test_usuarios.py::test_cadastro_sem_nome PASSED
-tests/test_usuarios.py::test_cadastro_sem_email PASSED
-tests/test_usuarios.py::test_cadastro_sem_senha PASSED
-tests/test_usuarios.py::test_buscar_usuario_por_id PASSED
-tests/test_usuarios.py::test_buscar_usuario_inexistente PASSED
-tests/test_usuarios.py::test_atualizar_usuario PASSED
-tests/test_usuarios.py::test_excluir_usuario PASSED
+============================= 21 passed in 18.62s =============================
 ```
 
 ---
@@ -149,6 +138,40 @@ Este projeto foi desenvolvido para praticar conceitos de:
 * Controle de versão com Git e GitHub
 
 ---
+
+## Cobertura de Testes
+
+A cobertura de testes foi medida utilizando a biblioteca **pytest-cov**, executando o comando:
+
+```bash
+pytest --cov=tests --cov-report=term-missing
+```
+
+### Resultado Obtido
+
+| Arquivo          | Cobertura |
+| ---------------- | --------- |
+| test_usuarios.py | 100%      |
+| test_login.py    | 100%      |
+| test_produtos.py | 100%      |
+
+### Cobertura Total
+
+**100% de cobertura** dos arquivos de teste analisados.
+
+Resultado apresentado pelo pytest-cov:
+
+```text
+Name                    Stmts   Miss  Cover
+-------------------------------------------
+test_login.py              41      0   100%
+test_produtos.py           52      0   100%
+test_usuarios.py           77      0   100%
+-------------------------------------------
+TOTAL                     170      0   100%
+```
+
+--
 
 ## Autor
 
